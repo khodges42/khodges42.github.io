@@ -143,9 +143,9 @@ var main = (function () {
         //if (!(sidenav instanceof Node) || sidenav.nodeName.toUpperCase() !== "DIV") {
           //  throw new InvalidArgumentException("Invalid value " + sidenav + " for argument 'sidenav'.");
         //}
-        if (!(profilePic instanceof Node) || profilePic.nodeName.toUpperCase() !== "IMG") {
-            throw new InvalidArgumentException("Invalid value " + profilePic + " for argument 'profilePic'.");
-        }
+        //if (!(profilePic instanceof Node) || profilePic.nodeName.toUpperCase() !== "IMG") {
+         //   throw new InvalidArgumentException("Invalid value " + profilePic + " for argument 'profilePic'.");
+        //}
         (typeof user === "string" && typeof host === "string") && (this.completePrompt = user + "@" + host + ":~" + (root ? "#" : "$"));
         this.profilePic = profilePic;
         this.prompt = prompt;
