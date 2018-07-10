@@ -170,7 +170,7 @@ var main = (function () {
 
     Terminal.prototype.init = function () {
         this.cmdLine.disabled = true;
-        );
+        
         this.lock(); // Need to lock here since the sidenav elements were just added
         document.body.addEventListener("click", function (event) {
             this.focus();
