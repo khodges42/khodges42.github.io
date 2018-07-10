@@ -435,22 +435,21 @@ var main = (function () {
     TypeSimulator.prototype.type = function (text, callback) {
         var isURL = (function () {
             return function (str="") {
-                    var returnState = false;
-                    try { 
-                        returnState = (str.startsWith("http") || str.startsWith("www")) && str.indexOf(" ") === -1 && str.indexOf("\n") === -1); 
-                    } 
-                    catch {
-                        returnState = false;
-                    }
-                    finally { 
-                        return returnState; 
-                    } 
+        
+                return (str.startsWith("http") || str.startsWith("www")) && str.indexOf(" ") === -1 && str.indexOf("\n") === -1; 
+
             };
             }
         })();
+        try{
         if (isURL(text)) {
             window.open(text);
         }
+        }
+                catch {
+                    console.log("oops");
+            }
+            
         var i = 0;
         var output = this.output;
         var timer = this.timer;
