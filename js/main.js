@@ -13,21 +13,21 @@ var main = (function () {
             }
         };
         Singleton.defaultOptions = {
-            general_help: "Below there's a list of commands that you can use.\nYou can use autofill by pressing the TAB key, autocompleting if there's only 1 possibility, or showing you a list of possibilities.",
-            ls_help: "List information about the files and folders (the current directory by default).",
-            cat_help: "Read FILE(s) content and print it to the standard output (screen).",
-            whoami_help: "Print the user name associated with the current effective user ID and more info.",
-            date_help: "Print the system date and time.",
-            help_help: "Print this menu.",
-            clear_help: "Clear the terminal screen.",
+            general_help: "Here's some commands...",
+            ls_help: "The Linking Sigil, abbreviated as 'LS', and called 'Ellis', is a sigil, (/ˈsɪdʒəl/; pl. sigilla or sigils; from Latin sigillum 'seal') a symbol used in magic, particularly chaos magic. It was developed around 2004 to link locations believed to be imbued with magical power and create a network of energy that can be accessible and harnessed by magical practitioners of any paradigm. The Linking Sigil was later used in the 'Assault on Reality' by a group of individuals, to rebel against, protest, and awaken those who are a part of the 'consensus reality', and it is still used by practitioners for this purpose. The symbol is often found within artwork and seen as graffiti.",
+            cat_help: "While not well known, the collective nouns used for cats and kittens are a clowder of cats and a kindle of kittens.",
+            whoami_help: "oh man, that's deep.",
+            date_help: "We just met, so this is awkward.",
+            help_help: "Recursion at its finest, right here.",
             reboot_help: "Reboot the system.",
             cd_help: "Change the current working directory.",
             mv_help: "Move (rename) files.",
             rm_help: "Remove files or directories.",
+            emacs_help:"'In days long ago, When clocks were so slow, These basic keystrokes, Took too long for folks, Unless they were writ, In C code to flit., Today that's not so, In Lisp they can go.' - Saint IGNUcius",
+            vi_help: "The editor of the beast.",
             rmdir_help: "Remove directory, this command will only work if the folders are empty.",
-            touch_help: "Change file timestamps. If the file doesn't exist, it's created an empty one.",
             sudo_help: "Execute a command as the superuser.",
-            welcome: "echo $ayy\nhello and welcome to my websight\ndd if=/dev/random of=/dev/sda\nrm -rf / --no-perserve-root\n............\nJust kidding. Either you meant to search for autorun.sh, but it's a TLD now :)\n or you're here to check out my profile. I'm Kevin, and write some code sometimes.\n https://github.com/khodges42\nhttps://twitter.com/khodges42\n\nOh, this terminal works by the way, check it out\ncat about.txt\nDistributed Systems, Information Security, and Machine Learning.\n Beardy GNU/Linux Fanatic.\n Chelsea Manning FanFiction Author.\n\n\n\n\n(There's a secret hidden in here somewhere, I'll buy you a beer if you find it.)",
+            welcome: "dd if=/dev/random of=/dev/sda\nrm -rf / --no-perserve-root\n............\nJust kidding. Either you meant to search for autorun.sh and discovered it's a TLD now :) or you're here for me.\n. I'm Kevin.\n https://github.com/khodges42\nhttps://twitter.com/khodges42\n\nOh, this terminal works by the way, check it out\ncat about.txt\n\n\nDistributed Systems, Information Security, and Machine Learning.\n Beardy GNU/Linux Fanatic.\n Chelsea Manning FanFiction Author.\n\n\n\n\n(There's a secret hidden in here somewhere, I'll buy you a beer if you find it.)\n\n\n\n",
             internet_explorer_warning: "NOTE: I see you're using internet explorer, this website won't work properly.",
             welcome_file_name: "welcome_message.txt",
             invalid_command_message: "<value>: command not found.",
@@ -401,7 +401,7 @@ var main = (function () {
         this.output.textContent = "";
         this.prompt.textContent = "";
         if (this.typeSimulator) {
-            this.type(configs.getInstance().welcome + (isUsingIE ? "\n" + configs.getInstance().internet_explorer_warning : ""), function () {
+            this.type(configs.getInstance().welcome + configs.getInstance().help + (isUsingIE ? "\n" + configs.getInstance().internet_explorer_warning : ""), function () {
                 this.unlock();
             }.bind(this));
         }
