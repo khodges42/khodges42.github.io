@@ -27,7 +27,7 @@ var main = (function () {
             rmdir_help: "Remove directory, this command will only work if the folders are empty.",
             touch_help: "Change file timestamps. If the file doesn't exist, it's created an empty one.",
             sudo_help: "Execute a command as the superuser.",
-            welcome: "dd if=/dev/random of=/dev/sda\nrm -rf / --no-perserve-root\n............\nJust kidding. Either you meant to search for autorun.sh, but it's a TLD now :)\n or you're here to check out my profile. I'm Kevin, and write some code sometimes.\n https://github.com/khodges42\nhttps://twitter.com/khodges42",
+            welcome: "echo $ayy\nhello and welcome to my websight\ndd if=/dev/random of=/dev/sda\nrm -rf / --no-perserve-root\n............\nJust kidding. Either you meant to search for autorun.sh, but it's a TLD now :)\n or you're here to check out my profile. I'm Kevin, and write some code sometimes.\n https://github.com/khodges42\nhttps://twitter.com/khodges42\n\nOh, this terminal works by the way, check it out\ncat about.txt\nDistributed Systems, Information Security, and Machine Learning.\n Beardy GNU/Linux Fanatic.\n Chelsea Manning FanFiction Author.\n\n\n\n\n(There's a secret hidden in here somewhere, I'll buy you a beer if you find it.)",
             internet_explorer_warning: "NOTE: I see you're using internet explorer, this website won't work properly.",
             welcome_file_name: "welcome_message.txt",
             invalid_command_message: "<value>: command not found.",
@@ -130,7 +130,7 @@ var main = (function () {
     };
 
 
-    var Terminal = function (prompt, cmdLine, output,  user, host, root, outputTimer) {
+    var Terminal = function (prompt, cmdLine, output, sidenav, profilePic, user, host, root, outputTimer) {
         if (!(prompt instanceof Node) || prompt.nodeName.toUpperCase() !== "DIV") {
             throw new InvalidArgumentException("Invalid value " + prompt + " for argument 'prompt'.");
         }
@@ -140,18 +140,23 @@ var main = (function () {
         if (!(output instanceof Node) || output.nodeName.toUpperCase() !== "DIV") {
             throw new InvalidArgumentException("Invalid value " + output + " for argument 'output'.");
         }
-        //if (!(sidenav instanceof Node) || sidenav.nodeName.toUpperCase() !== "DIV") {
-          //  throw new InvalidArgumentException("Invalid value " + sidenav + " for argument 'sidenav'.");
-        //}
-        //if (!(profilePic instanceof Node) || profilePic.nodeName.toUpperCase() !== "IMG") {
-         //   throw new InvalidArgumentException("Invalid value " + profilePic + " for argument 'profilePic'.");
-        //}
+        if (!(sidenav instanceof Node) || sidenav.nodeName.toUpperCase() !== "DIV") {
+            throw new InvalidArgumentException("Invalid value " + sidenav + " for argument 'sidenav'.");
+        }
+        if (!(profilePic instanceof Node) || profilePic.nodeName.toUpperCase() !== "IMG") {
+            throw new InvalidArgumentException("Invalid value " + profilePic + " for argument 'profilePic'.");
+        }
         (typeof user === "string" && typeof host === "string") && (this.completePrompt = user + "@" + host + ":~" + (root ? "#" : "$"));
+        this.profilePic = profilePic;
         this.prompt = prompt;
         this.cmdLine = cmdLine;
         this.output = output;
+        this.sidenav = sidenav;
+        this.sidenavOpen = false;
+        this.sidenavElements = [];
         this.typeSimulator = new TypeSimulator(outputTimer, output);
     };
+
     Terminal.prototype.type = function (text, callback) {
         this.typeSimulator.type(text, callback);
     };
@@ -164,10 +169,17 @@ var main = (function () {
     };
 
     Terminal.prototype.init = function () {
+        this.sidenav.addEventListener("click", ignoreEvent);
         this.cmdLine.disabled = true;
-        
+        this.sidenavElements.forEach(function (elem) {
+            elem.disabled = true;
+        });
+        this.prepareSideNav();
         this.lock(); // Need to lock here since the sidenav elements were just added
         document.body.addEventListener("click", function (event) {
+            if (this.sidenavOpen) {
+                this.handleSidenav(event);
+            }
             this.focus();
         }.bind(this));
         this.cmdLine.addEventListener("keydown", function (event) {
@@ -194,20 +206,61 @@ var main = (function () {
         element.style.transform = "translateX(0)";
     };
 
-    
-        
+    Terminal.prototype.prepareSideNav = function () {
+        var capFirst = (function () {
+            return function (string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        })();
+        for (var file in files.getInstance()) {
+            var element = document.createElement("button");
+            Terminal.makeElementDisappear(element);
+            element.onclick = function (file, event) {
+                this.handleSidenav(event);
+                this.cmdLine.value = "cat " + file + " ";
+                this.handleCmd();
+            }.bind(this, file);
+            element.appendChild(document.createTextNode(capFirst(file.replace(/\.[^/.]+$/, "").replace(/_/g, " "))));
+            this.sidenav.appendChild(element);
+            this.sidenavElements.push(element);
+        }
+        // Shouldn't use document.getElementById but Terminal is already using loads of params
+        document.getElementById("sidenavBtn").addEventListener("click", this.handleSidenav.bind(this));
+    };
+
+    Terminal.prototype.handleSidenav = function (event) {
+        if (this.sidenavOpen) {
+            this.profilePic.style.opacity = 0;
+            this.sidenavElements.forEach(Terminal.makeElementDisappear);
+            this.sidenav.style.width = "50px";
+            document.getElementById("sidenavBtn").innerHTML = "&#9776;";
+            this.sidenavOpen = false;
+        } else {
+            this.sidenav.style.width = "300px";
+            this.sidenavElements.forEach(Terminal.makeElementAppear);
+            document.getElementById("sidenavBtn").innerHTML = "&times;";
+            this.profilePic.style.opacity = 1;
+            this.sidenavOpen = true;
+        }
+        document.getElementById("sidenavBtn").blur();
+        ignoreEvent(event);
+    };
 
     Terminal.prototype.lock = function () {
         this.exec();
         this.cmdLine.blur();
         this.cmdLine.disabled = true;
-        
+        this.sidenavElements.forEach(function (elem) {
+            elem.disabled = true;
+        });
     };
 
     Terminal.prototype.unlock = function () {
         this.cmdLine.disabled = false;
         this.prompt.textContent = this.completePrompt;
-        
+        this.sidenavElements.forEach(function (elem) {
+            elem.disabled = false;
+        });
         scrollToBottom();
         this.focus();
     };
@@ -423,6 +476,8 @@ var main = (function () {
                 document.getElementById("prompt"),
                 document.getElementById("cmdline"),
                 document.getElementById("output"),
+                document.getElementById("sidenav"),
+                document.getElementById("profilePic"),
                 configs.getInstance().user,
                 configs.getInstance().host,
                 configs.getInstance().is_root,
