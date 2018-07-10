@@ -157,7 +157,7 @@ var main = (function () {
         this.typeSimulator = new TypeSimulator(outputTimer, output);
     };
 
-    Terminal.prototype.type = function (text, callback) {
+    Terminal.prototype.type = function (text = "I can't let you do that, Tom.", callback) {
         this.typeSimulator.type(text, callback);
     };
 
@@ -434,18 +434,14 @@ var main = (function () {
 
      TypeSimulator.prototype.type = function (text, callback) {
         var isURL = (function () {
-            return function (str="") {
+            return function (str) {
                 return (str.startsWith("http") || str.startsWith("www")) && str.indexOf(" ") === -1 && str.indexOf("\n") === -1;
             };
 })();
-        try{
         if (isURL(text)) {
             window.open(text);
         }
-        }
-                catch {
-                    console.log("oops");
-            }
+
             
         var i = 0;
         var output = this.output;
