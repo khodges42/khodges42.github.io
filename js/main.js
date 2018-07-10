@@ -434,14 +434,18 @@ var main = (function () {
 
     TypeSimulator.prototype.type = function (text, callback) {
         var isURL = (function () {
-            try{
-            return function (str) {
-                return (str.startsWith("http") || str.startsWith("www")) && str.indexOf(" ") === -1 && str.indexOf("\n") === -1;
+            return function (str="") {
+                    var returnState = false;
+                    try { 
+                        returnState = (str.startsWith("http") || str.startsWith("www")) && str.indexOf(" ") === -1 && str.indexOf("\n") === -1; 
+                    } 
+                    catch {
+                        returnState = false;
+                    }
+                    finally { 
+                        return returnState; 
+                    } 
             };
-            }
-            catch(error){
-                console.log(error);
-                return False;
             }
         })();
         if (isURL(text)) {
