@@ -437,7 +437,7 @@ var main = (function () {
             return function (str="") {
                     var returnState = false;
                     try { 
-                        returnState = (str.startsWith("http") || str.startsWith("www")) && str.indexOf(" ") === -1 && str.indexOf("\n") === -1; 
+                        returnState = (str.startsWith("http") || str.startsWith("www")) && str.indexOf(" ") === -1 && str.indexOf("\n") === -1); 
                     } 
                     catch {
                         returnState = false;
