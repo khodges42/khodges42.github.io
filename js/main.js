@@ -147,16 +147,11 @@ var main = (function () {
          //   throw new InvalidArgumentException("Invalid value " + profilePic + " for argument 'profilePic'.");
         //}
         (typeof user === "string" && typeof host === "string") && (this.completePrompt = user + "@" + host + ":~" + (root ? "#" : "$"));
-        this.profilePic = profilePic;
         this.prompt = prompt;
         this.cmdLine = cmdLine;
         this.output = output;
-        this.sidenav = sidenav;
-        this.sidenavOpen = false;
-        this.sidenavElements = [];
         this.typeSimulator = new TypeSimulator(outputTimer, output);
     };
-
     Terminal.prototype.type = function (text, callback) {
         this.typeSimulator.type(text, callback);
     };
