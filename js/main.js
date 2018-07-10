@@ -14,7 +14,7 @@ var main = (function () {
         };
         Singleton.defaultOptions = {
             general_help: "Here's some commands...",
-            ls_help: "The Linking Sigil, abbreviated as 'LS', and called 'Ellis', is a sigil, (/ˈsɪdʒəl/; pl. sigilla or sigils; from Latin sigillum 'seal') a symbol used in magic, particularly chaos magic. It was developed around 2004 to link locations believed to be imbued with magical power and create a network of energy that can be accessible and harnessed by magical practitioners of any paradigm. The Linking Sigil was later used in the 'Assault on Reality' by a group of individuals, to rebel against, protest, and awaken those who are a part of the 'consensus reality', and it is still used by practitioners for this purpose. The symbol is often found within artwork and seen as graffiti.",
+            ls_help: "The Linking Sigil, abbreviated as 'LS', and called 'Ellis', is a sigil, (/ˈsɪdʒəl/; pl. sigilla or sigils; from Latin sigillum 'seal')",
             cat_help: "While not well known, the collective nouns used for cats and kittens are a clowder of cats and a kindle of kittens.",
             whoami_help: "oh man, that's deep.",
             date_help: "We just met, so this is awkward.",
@@ -29,8 +29,7 @@ var main = (function () {
             sudo_help: "Execute a command as the superuser.",
             welcome: "dd if=/dev/random of=/dev/sda\nrm -rf / --no-perserve-root\n............\nJust kidding. Either you meant to search for autorun.sh and discovered it's a TLD now :) or you're here for me.\n. I'm Kevin.\n https://github.com/khodges42\nhttps://twitter.com/khodges42\n\nOh, this terminal works by the way, check it out\ncat about.txt\n\n\nDistributed Systems, Information Security, and Machine Learning.\n Beardy GNU/Linux Fanatic.\n Chelsea Manning FanFiction Author.\n\n\n\n\n(There's a secret hidden in here somewhere, I'll buy you a beer if you find it.)\n\n\n\n",
             internet_explorer_warning: "NOTE: I see you're using internet explorer, this website won't work properly.",
-            welcome_file_name: "welcome_message.txt",
-            invalid_command_message: "<value>: command not found.",
+            welcome_file_name: "welcome_message.txt",            invalid_command_message: "<value>: command not found.",
             reboot_message: "Preparing to reboot...\n\n3...\n\n2...\n\n1...\n\nRebooting...\n\n",
             permission_denied_message: "Unable to '<value>', permission denied.",
             sudo_message: "[sudo] password for khodges42\nkhodges42 is not in the sudoers file.  This incident will be reported.",
@@ -46,7 +45,7 @@ var main = (function () {
             host: "hosaka_ono_sendai",
             user: "khodges42",
             is_root: false,
-            type_delay: 20
+            type_delay: 10
         };
         return {
             getInstance: function (options) {
@@ -115,6 +114,8 @@ var main = (function () {
 
     var cmds = {
         LS: { value: "ls", help: configs.getInstance().ls_help },
+        EMACS: { value: "emacs", help: configs.getInstance().emacs_help},
+        VI: { value: "vi", help: configs.getInstance().vi_help},
         CAT: { value: "cat", help: configs.getInstance().cat_help },
         WHOAMI: { value: "whoami", help: configs.getInstance().whoami_help },
         DATE: { value: "date", help: configs.getInstance().date_help },
@@ -329,6 +330,12 @@ var main = (function () {
             case cmds.REBOOT.value:
                 this.reboot();
                 break;
+            case cmds.EMACS.value:
+                this.emacs();
+                break;
+            case cmds.VI.value:
+                this.vi();
+                break;
             case cmds.CD.value:
             case cmds.MV.value:
             case cmds.RMDIR.value:
@@ -394,7 +401,16 @@ var main = (function () {
     };
 
     Terminal.prototype.reboot = function () {
-        this.type(configs.getInstance().reboot_message, this.reset.bind(this));
+        //this.type(configs.getInstance().reboot_message, this.reset.bind(this));
+        location.reload(); 
+    };
+    
+    Terminal.prototype.emacs = function () {
+        window.open("http://www.ymacs.org/demo/")
+    };
+    
+    Terminal.prototype.vi = function () {
+        window.open("https://www.youtube.com/watch?v=S76pHIYx3ik");
     };
 
     Terminal.prototype.reset = function () {
