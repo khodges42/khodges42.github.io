@@ -432,15 +432,12 @@ var main = (function () {
     };
 
 
-    TypeSimulator.prototype.type = function (text, callback) {
+     TypeSimulator.prototype.type = function (text, callback) {
         var isURL = (function () {
             return function (str="") {
-        
-                return (str.startsWith("http") || str.startsWith("www")) && str.indexOf(" ") === -1 && str.indexOf("\n") === -1; 
-
+                return (str.startsWith("http") || str.startsWith("www")) && str.indexOf(" ") === -1 && str.indexOf("\n") === -1;
             };
-            }
-        })();
+})();
         try{
         if (isURL(text)) {
             window.open(text);
