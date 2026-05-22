@@ -30,6 +30,18 @@ body {
     clear: both;
     width: 100%;
 }
+.matrix-mode {
+    color: #00ff66;
+    background-color: #020802;
+}
+
+.matrix-mode .prompt-color {
+    color: #7cff9b;
+}
+
+.matrix-mode #sidenav {
+    background-color: #004d26;
+}
 #prompt {
     white-space: nowrap;
     display: -webkit-box;

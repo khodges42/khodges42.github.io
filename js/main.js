@@ -27,7 +27,20 @@ var main = (function () {
             vi_help: "The editor of the beast.",
             rmdir_help: "Remove directory, this command will only work if the folders are empty.",
             sudo_help: "Execute a command as the superuser.",
-            welcome: "dd if=/dev/random of=/dev/sda\nrm -rf / --no-perserve-root\n............\nJust kidding. Either you meant to search for autorun.sh and discovered it's a TLD now :) or you're here for me.\n. I'm Kevin.\n https://github.com/khodges42\nhttps://twitter.com/khodges42\n\nOh, this terminal works by the way, check it out\ncat about.txt\n\n\nDistributed Systems, Information Security, and Machine Learning.\n Beardy GNU/Linux Fanatic.\n Chelsea Manning FanFiction Author.\n\n\n\n\n(There's a secret hidden in here somewhere, I'll buy you a beer if you find it.)\n\n\n\n",
+            welcome:
+                "dd if=/dev/random of=/dev/sda\nrm -rf / --no-perserve-root\n............\n" +
+                "just kidding. \n" +
+                "I hope you didn't curl this. \n" +
+                "Welcome. You are in the system.\n\n" +
+                "I'm K Hodges. Organic Intelligence. Human Programmer.\n" +
+                "Senior Engineer of things. distributed systems / security / AI tooling / weird machines\n\n" +
+                "Type 'help' to see commands.\n" +
+                "Try:\n" +
+                "  about\n" +
+                "  projects\n" +
+                "  links\n" +
+                "  now\n\n" +
+                "Somewhere in here is a secret.\n\n",
             internet_explorer_warning: "NOTE: I see you're using internet explorer, this website won't work properly.",
             welcome_file_name: "welcome_message.txt",            invalid_command_message: "<value>: command not found.",
             reboot_message: "Preparing to reboot...\n\n3...\n\n2...\n\n1...\n\nRebooting...\n\n",
@@ -63,9 +76,62 @@ var main = (function () {
             }
         };
         Singleton.defaultOptions = {
-            "about.txt": "Distributed Systems, Information Security, and Machine Learning.\n Beardy GNU/Linux Fanatic.\n Chelsea Manning FanFiction Author.",
-            "fsociety.dat": "fsociety.dat: Permission Denied",
-            "readme.txt": "--------- readme.txt----------\n\nLEAVE ME HERE\n\n------------------------------"
+            "about.txt":
+                "K Hodges\n\n" +
+                "Senior software engineer focused on distributed systems, security,\n" +
+                "PKI/trust infrastructure, AI tooling, and weird little machines.\n\n" +
+                "I've worked on game infrastructure, SIEM/data platforms,\n" +
+                "satellite simulation systems, and cryptographic trust services.\n\n" +
+                "I like systems that are understandable, durable, and hard to misuse.\n" +
+                "I also like Lisp, punk artifacts, terminals, cats, and cursed demos.",
+        
+            "projects.txt":
+                "PERSONAL\n\n" +
+                "NightShift\n" +
+                "  Agentic workflow experiments for local-first AI coding systems.\n\n" +
+                "VoidKanren\n" +
+                "  Rust relational programming / miniKanren-inspired experiments.\n\n" +
+                "TellyLisp\n" +
+                "  Lisp interpreter experiments, originally prototyped in Godot.\n\n" +
+                "segfault\n" +
+                "  YouTube channel for systems, AI tooling, programming, and weird software.\n\n" +
+                "PROFESSIONAL\n\n" +
+                "Amazon Kuiper\n" +
+                "  PKI, trust infrastructure, satellite simulation, and security-adjacent systems.\n" +
+                "  I build the systems for satellites to talk securely.\n\n" +
+                "Riot Games\n" +
+                "  Kubernetes/game infrastructure, deployment systems, and large-scale ops.\n" +
+                "  We launched Legends of Runeterra to millions of players, and I built the Kubernetes infrastructure to support it!\n" +
+                "  Later we got Valorant pings down to 7ms roundtrip and got League working on K8s! \n" +
+                "  I also built Riot Autoremediate, a platform for autoremediating on-call issues! It saved like 40 hours a week!\n\n" +
+                "ReliaQuest\n" +
+                "  SIEM, telemetry, ML/data systems, and security automation.",
+        
+            "links.txt":
+                "GitHub:\n" +
+                "  https://github.com/khodges42\n\n" +
+                "LinkedIn:\n" +
+                "  https://linkedin.com/in/khodges42\n\n" +
+                "YouTube:\n" +
+                "  https://www.youtube.com/@segfault-engineering",
+        
+            "now.txt":
+                "Currently interested in:\n\n" +
+                "  - AI-assisted engineering that preserves trust\n" +
+                "  - PKI, mTLS, and post-quantum cryptography\n" +
+                "  - local model tooling\n" +
+                "  - Lisp / relational programming\n" +
+                "  - making software feel like an artifact again",
+        
+            "contact.txt":
+                "Best public contact path:\n\n" +
+                "  LinkedIn: https://linkedin.com/in/khodges42\n" +
+                "  GitHub:   https://github.com/khodges42",
+        
+            "secrets.txt":
+                "nice try.\n\n" +
+                "Try harder."
+        };
         };
         return {
             getInstance: function (options) {
@@ -127,7 +193,15 @@ var main = (function () {
         RM: { value: "rm", help: configs.getInstance().rm_help },
         RMDIR: { value: "rmdir", help: configs.getInstance().rmdir_help },
         TOUCH: { value: "touch", help: configs.getInstance().touch_help },
-        SUDO: { value: "sudo", help: configs.getInstance().sudo_help }
+        SUDO: { value: "sudo", help: configs.getInstance().sudo_help },
+        ABOUT: { value: "about", help: "Show who I am." },
+        PROJECTS: { value: "projects", help: "Show notable projects." },
+        LINKS: { value: "links", help: "Show external links." },
+        CONTACT: { value: "contact", help: "Show contact info." },
+        NOW: { value: "now", help: "Show current interests." },
+        TELL: { value: "telly", help: "Summon the cat." },
+        HACK: { value: "hack", help: "Do hacker movie nonsense." },
+        MATRIX: { value: "matrix", help: "Toggle terminal green mode." },
     };
 
 
@@ -309,6 +383,30 @@ var main = (function () {
         var cmdComponents = this.cmdLine.value.trim().split(" ");
         this.lock();
         switch (cmdComponents[0]) {
+            case cmds.ABOUT.value:
+                this.cat(["cat", "about.txt"]);
+                break;
+            case cmds.PROJECTS.value:
+                this.cat(["cat", "projects.txt"]);
+                break;
+            case cmds.LINKS.value:
+                this.cat(["cat", "links.txt"]);
+                break;
+            case cmds.CONTACT.value:
+                this.cat(["cat", "contact.txt"]);
+                break;
+            case cmds.NOW.value:
+                this.cat(["cat", "now.txt"]);
+                break;
+            case cmds.TELL.value:
+                this.telly();
+                break;
+            case cmds.HACK.value:
+                this.hack();
+                break;
+            case cmds.MATRIX.value:
+                this.matrix();
+                break;
             case cmds.CAT.value:
                 this.cat(cmdComponents);
                 break;
@@ -352,11 +450,43 @@ var main = (function () {
         };
     };
 
+    Terminal.prototype.telly = function () {
+        var result =
+            " /\\_/\\\\\n" +
+            "( o.o )\n" +
+            " > ^ <\n\n" +
+            "Telly has joined the terminal.\n" +
+            "He is probably sitting on the router.";
+        this.type(result, this.unlock.bind(this));
+    };
+    
+    Terminal.prototype.hack = function () {
+        var result =
+            "initializing Gibson interface...\n" +
+            "bypassing mainframe...\n" +
+            "rotating encryption cube...\n" +
+            "ACCESS GRANTED\n\n" +
+            "just kidding. this is a static website.";
+        this.type(result, this.unlock.bind(this));
+    };
+    
+    Terminal.prototype.matrix = function () {
+        document.body.classList.toggle("matrix-mode");
+        var enabled = document.body.classList.contains("matrix-mode");
+        this.type(enabled ? "matrix mode enabled." : "matrix mode disabled.", this.unlock.bind(this));
+    };
+
     Terminal.prototype.cat = function (cmdComponents) {
         var result;
         if (cmdComponents.length <= 1) {
             result = configs.getInstance().usage + ": " + cmds.CAT.value + " <" + configs.getInstance().file + ">";
-        } else if (!cmdComponents[1] || (!cmdComponents[1] === configs.getInstance().welcome_file_name && !files.getInstance().hasOwnProperty(cmdComponents[1]))) {
+        }  else if (
+    !cmdComponents[1] ||
+    (
+        cmdComponents[1] !== configs.getInstance().welcome_file_name &&
+        !files.getInstance().hasOwnProperty(cmdComponents[1])
+    )
+) {
             result = configs.getInstance().file_not_found.replace(configs.getInstance().value_token, cmdComponents[1]);
         } else {
             result = cmdComponents[1] === configs.getInstance().welcome_file_name ? configs.getInstance().welcome : files.getInstance()[cmdComponents[1]];
