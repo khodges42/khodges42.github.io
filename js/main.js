@@ -132,7 +132,6 @@ var main = (function () {
                 "nice try.\n\n" +
                 "Try harder."
         };
-        };
         return {
             getInstance: function (options) {
                 instance === void 0 && (instance = new Singleton(options));
