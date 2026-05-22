@@ -28,13 +28,12 @@ var main = (function () {
             rmdir_help: "Remove directory, this command will only work if the folders are empty.",
             sudo_help: "Execute a command as the superuser.",
             welcome:
-                "dd if=/dev/random of=/dev/sda\nrm -rf / --no-perserve-root\n............\n" +
-                "just kidding. \n" +
-                "I hope you didn't curl this. \n" +
-                "Welcome. You are in the system.\n\n" +
+                "Hello human\nWelcome to my website.\n............\n" +
+                "You are in the system.\n\n" +
                 "I'm K Hodges. Organic Intelligence. Human Programmer.\n" +
                 "Senior Engineer of things. distributed systems / security / AI tooling / weird machines\n\n" +
                 "Type 'help' to see commands.\n" +
+                "If you are a recruiter and very confused right now, just type 'recruiter' (I promise this won't break your macbook).\n" +
                 "Try:\n" +
                 "  about\n" +
                 "  projects\n" +
@@ -84,7 +83,52 @@ var main = (function () {
                 "satellite simulation systems, and cryptographic trust services.\n\n" +
                 "I like systems that are understandable, durable, and hard to misuse.\n" +
                 "I also like Lisp, punk artifacts, terminals, cats, and cursed demos.",
-        
+
+                "recruiter.txt":
+                    "K Hodges\n\n" +
+                    "Senior software engineer focused on:\n" +
+                    "  - distributed systems\n" +
+                    "  - security / PKI / trust infrastructure\n" +
+                    "  - AI tooling\n" +
+                    "  - large-scale backend systems\n\n" +
+                    "I work mostly with these :\n" +
+                    "  - Rust, Python, Go\n" +
+                    "  - Linux, AWS, Terraform, CloudFormation\n" +
+                    "Don't worry :\n" +
+                    "  - I work really well with other people and am not one of those weird antisocial engineers\n" +
+                    "  - I also regularly bring in homemade baked goods if I like you.\n" +
+                    "Here are some of my personal projects\n\n" +
+                    "NightShift\n" +
+                    "  Agentic workflow experiments for local-first AI coding systems.\n\n" +
+                    "VoidKanren\n" +
+                    "  Rust relational programming / miniKanren-inspired experiments.\n\n" +
+                    "TellyLisp\n" +
+                    "  Lisp interpreter experiments, originally prototyped in Godot.\n\n" +
+                    "segfault\n" +
+                    "  YouTube channel for systems, AI tooling, programming, and weird software.\n\n" +
+                    "Where I've worked\n\n" +
+                    "Amazon Kuiper\n" +
+                    "  PKI, trust infrastructure, satellite simulation, and security-adjacent systems.\n" +
+                    "  I build the systems for satellites to talk securely.\n\n" +
+                    "Slack/Salesforce\n" +
+                    "  Data Engineering and Distributed Systems\n" +
+                    "  I handled the engineering behind petabytes of data! Lots of Spark, Go, AWS, and very expensive button presses!\n\n" +
+                    "Riot Games\n" +
+                    "  Kubernetes/game infrastructure, deployment systems, and large-scale ops.\n" +
+                    "  We launched Legends of Runeterra to millions of players, and I built the Kubernetes infrastructure to support it!\n" +
+                    "  Later we got Valorant pings down to 7ms roundtrip and got League working on K8s! \n" +
+                    "  I also built Riot Autoremediate, a platform for autoremediating on-call issues! It saved like 40 hours a week!\n\n" +
+                    "ReliaQuest\n" +
+                    "  SIEM, telemetry, ML/data systems, and security automation.\n\n" +
+                    "Links:\n" +
+                    "  GitHub:   https://github.com/khodges42\n" +
+                    "  LinkedIn: https://linkedin.com/in/khodges42\n" +
+                    "  YouTube:  https://www.youtube.com/@segfault-engineering\n\n" +
+                    "For the fun version, type:\n" +
+                    "  about\n" +
+                    "  projects\n" +
+                    "  telly",
+                        
             "projects.txt":
                 "PERSONAL\n\n" +
                 "NightShift\n" +
@@ -99,13 +143,21 @@ var main = (function () {
                 "Amazon Kuiper\n" +
                 "  PKI, trust infrastructure, satellite simulation, and security-adjacent systems.\n" +
                 "  I build the systems for satellites to talk securely.\n\n" +
+                "Slack/Salesforce\n" +
+                "  Data Engineering and Distributed Systems\n" +
+                "  I handled the engineering behind petabytes of data! Lots of Spark, Go, AWS, and very expensive button presses!\n\n" +
                 "Riot Games\n" +
                 "  Kubernetes/game infrastructure, deployment systems, and large-scale ops.\n" +
                 "  We launched Legends of Runeterra to millions of players, and I built the Kubernetes infrastructure to support it!\n" +
                 "  Later we got Valorant pings down to 7ms roundtrip and got League working on K8s! \n" +
                 "  I also built Riot Autoremediate, a platform for autoremediating on-call issues! It saved like 40 hours a week!\n\n" +
                 "ReliaQuest\n" +
-                "  SIEM, telemetry, ML/data systems, and security automation.",
+                "  SIEM, telemetry, ML/data systems, and security automation." +
+                "Free and Open Source:\n\n" +
+                "Linux Kernel\n" +
+                "  I've done a lot of patches! GKH might remember my name. Linus Torvalds has personally approved my work and has never once said anything mean to me\n\n" +
+                "Tensorflow\n" +
+                "  Internal contributions as well as external libraries. I did a lot of work for security AI.\n\n",
         
             "links.txt":
                 "GitHub:\n" +
@@ -201,6 +253,7 @@ var main = (function () {
         TELL: { value: "telly", help: "Summon the cat." },
         HACK: { value: "hack", help: "Do hacker movie nonsense." },
         MATRIX: { value: "matrix", help: "Toggle terminal green mode." },
+        RECRUITER: { value: "recruiter", help: "I am a recruiter please just show me something relevant." },
     };
 
 
@@ -384,6 +437,9 @@ var main = (function () {
         switch (cmdComponents[0]) {
             case cmds.ABOUT.value:
                 this.cat(["cat", "about.txt"]);
+                break;
+            case cmds.RECRUITER.value:
+                this.cat(["cat", "recruiter.txt"]);
                 break;
             case cmds.PROJECTS.value:
                 this.cat(["cat", "projects.txt"]);
