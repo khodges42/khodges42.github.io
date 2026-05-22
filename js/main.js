@@ -546,9 +546,13 @@ var main = (function () {
         this.output.textContent = "";
         this.prompt.textContent = "";
         if (this.typeSimulator) {
-            this.type(configs.getInstance().welcome + configs.getInstance().help + (isUsingIE ? "\n" + configs.getInstance().internet_explorer_warning : ""), function () {
-                this.unlock();
-            }.bind(this));
+            this.type(
+                configs.getInstance().welcome +
+                (isUsingIE ? "\n" + configs.getInstance().internet_explorer_warning : ""),
+                function () {
+                    this.unlock();
+                }.bind(this)
+            );
         }
     };
 
